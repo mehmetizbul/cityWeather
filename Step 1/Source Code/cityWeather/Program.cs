@@ -69,7 +69,7 @@ namespace CityWeather
             // Execution of the application logic.
             RunAsync().GetAwaiter().GetResult();                        
         }
-        // The function returns the list of cities from TUI API.
+        // The function returns the City object list from TUI API response.
         private static async Task <List<City>> GetCityAsync()
         {                                       
             var response = await client.GetAsync(baseTUI + "api/v3/cities/");
@@ -81,7 +81,7 @@ namespace CityWeather
             return cityList;                            
         }
 
-        // The function returns whe weather information for a specific city from "weatherapi"
+        // The function returns the weather information for a specific city into Weather object from "weatherapi"
         private static async Task<Weather> GetWeatherAsync(string url)
         {
             var response = await client.GetAsync(baseApiWeather + url);
