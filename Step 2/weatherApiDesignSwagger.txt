@@ -1,0 +1,97 @@
+openapi: 3.0.3
+info:
+  title: Musement API
+  description: "Musement API"
+  termsOfService: https://www.musement.com/
+  contact:
+    email: support@musement.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+
+servers:
+  - url: https://sandbox.musement.com/api/v3
+    description: Sandbox server
+  
+  - url: https://api.musement.com/api/v3
+    description: Production server
+
+paths:
+  /cities/{cityid}/forecast:
+    post:
+      summary: Inserts weather forecast for the city
+      description: ''
+      operationId: 'insertForecast'
+      parameters:
+        - $ref: '#/components/parameters/cityid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Forecast'
+      responses:
+        '201':
+          description: Returned when successful creation
+        '400':
+          description: Returned if sent data contains errors
+        '404':
+          description: Returned when resource is not found
+        '503':
+          description: Returned when the service is unavailable
+  /cities/{cityid}/forecast/{date}:
+    get:
+      summary: Gets weather forecast for the city
+      description: ''
+      operationId: 'getForecast'
+      parameters:
+        - $ref: '#/components/parameters/cityid'
+        - $ref: '#/components/parameters/date'
+      responses:
+        '200':
+          description: Returned when successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forecast'
+        '400':
+          description: Returned if sent data contains errors
+        '404':
+          description: Returned when resource is not found
+        '503':
+          description: Returned when the service is unavailable
+components:
+  schemas:
+    Forecast:
+      type: object
+      properties:
+        forecastInfo:
+          type: string
+          example: Sunny
+        date:
+          type: string
+          format: date
+          example: 2022-09-16
+      xml:
+        name: forecast
+  parameters:
+    cityid:
+      name: cityid
+      in: path
+      description: ID of city
+      required: true
+      schema:
+        type: integer
+        format: int64
+        example: 1
+    date:
+      name: date
+      in: path
+      description: Date of weather
+      required: true
+      schema:
+        type: string
+        format: date
+        example: 2022-09-16
+
+

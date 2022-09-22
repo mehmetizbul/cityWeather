@@ -33,10 +33,10 @@ namespace CityWeather
 
     public class Forecast
     {
-        public Forecastday[] Forecastday { get; set; }
+        public ForecastDay[] Forecastday { get; set; }
     }
 
-    public class Forecastday
+    public class ForecastDay
     {
         public Day Day { get; set; }
     }
@@ -97,7 +97,7 @@ namespace CityWeather
                 // Class instance declarations
                 List<City> cities = new List<City>();
                 Weather weather = new Weather();
-                Forecastday[] forecastdays;
+                ForecastDay[] forecastdays;
 
                 string resultString;
                 string days;
@@ -106,24 +106,21 @@ namespace CityWeather
                 cities = await GetCityAsync();                
                
                 // For each returned city, a weather information request made to "weatherapi"
-                foreach (var city in cities)
+                foreach (City city in cities)
                 {
-                    //city.Latitude = "55";
-                    //city.Longitude = "55";
-
                     resultString = "Processed city {0} | ";
                     weather = await GetWeatherAsync("forecast.json?key="+ weatherApiKey + "&q="+ city.Latitude + ","+ city.Longitude + "&days="+ weatherDays);
                     // Assign the result to forecastday class
                     forecastdays = weather.Forecast.Forecastday;
 
                     // Here I could have get todays value with forecastday[0].day.condition.text and tomorrow's value with forecastday[1].day.condition.text with indexing, but I decided to use more generic approach.
-                    foreach (var forecastday in forecastdays)
+                    foreach (ForecastDay forecastday in forecastdays)
                     {
                         days = string.Empty;
                         days += forecastday.Day.Condition.Text + " - ";
                         resultString = resultString + days;                        
                     }
-
+                    // Removing the "- and " " at the end of the result string.
                     resultString = resultString.TrimEnd(' ');
                     resultString = resultString.TrimEnd('-');
                     Console.WriteLine(resultString, weather.Location.Name);
