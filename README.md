@@ -1,4 +1,4 @@
-# cityWeather
+# The City Weather Project
 Name-Surname: Mehmet İZBUL
 
 Country of residency: CYPRUS
