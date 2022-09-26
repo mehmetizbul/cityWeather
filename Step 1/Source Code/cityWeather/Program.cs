@@ -57,7 +57,7 @@ namespace CityWeather
         private static HttpClient client = new HttpClient();
         private static string baseTUI = "https://api.musement.com/";
         private static string baseApiWeather = "http://api.weatherapi.com/v1/";
-        private static string weatherApiKey = "dd003f4d64e04f3cb6955131221409";
+        private static string weatherApiKey = "c7124ca76c5241a095e62349222609";
         private static int weatherDays = 2;
 
         static void Main(string[] args)
